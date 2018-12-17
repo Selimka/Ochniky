@@ -83,7 +83,7 @@ namespace WpfApp2
                         //DayPeople = x.Field<int>((x.Field<int>("day") - 1) % 7 + 1),
                         Type = x.Field<String>("nt"),
                         Teacher = x.Field<String>("prep"),
-                        //Is_everyweek =x.Field<bool>("everyweek")
+                        // Is_everyweek =x.Field<bool>("everyweek")
                     });
 
                 this.Auditories = new ObservableCollection<Auditory>(fetchedPersons);
