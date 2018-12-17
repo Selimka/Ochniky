@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="WpfApp2.Views.FullAudCellView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp2.Views"
+             xmlns:root="clr-namespace:WpfApp2"
+             mc:Ignorable="d" 
+             x:Name="FullAudControl"
+             d:DesignHeight="220" d:DesignWidth="100">
+    
+    <Grid>
+        <Grid.Resources>
+            <root:NullVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        </Grid.Resources>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="110"/>
+            <RowDefinition Height="110"/>
+        </Grid.RowDefinitions>
+        
+        <local:AuditoryCellView x:Name="Odd" Auditories="{Binding FullAud.Odd, ElementName=FullAudControl}" Grid.Row="0"/>
+        <local:AuditoryCellView x:Name="Even" Auditories="{Binding FullAud.Even, ElementName=FullAudControl}" Grid.Row="1"/>
+    </Grid>
+</UserControl>
