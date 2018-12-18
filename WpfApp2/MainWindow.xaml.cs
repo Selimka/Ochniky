@@ -89,35 +89,49 @@ namespace WpfApp2
                 this.Auditories = new ObservableCollection<Auditory>(fetchedPersons);
             }
 
+
+
             var groupAud = from a in Auditories
                            group a by new
                            {
                                a.DayPeople,
-                               a.Pair
+                               a.Pair,
+                               a.Is_everyweek
                            };
 
             var groupList = new List<FullAuditory>();
            
             foreach (var g in groupAud )
             {
-                if (g.Count() == 2)
+                var list = g.ToList();
+                var fAud = new FullAuditory
                 {
-                    groupList.Add(new FullAuditory {
-                        Odd = g.ToList()[0],
-                        Even = g.ToList()[1],
-                        Pair = g.Key.Pair,
-                        DayPeople = g.Key.DayPeople
-                    });                
+                    Pair = g.Key.Pair,
+                    DayPeople = g.Key.DayPeople,
+                    Is_everyweek = g.Key.Is_everyweek
+                };
+
+                if (list[0].Day >= 8)
+                {
+                    fAud.Even = list[0];
                 }
                 else
                 {
-                    groupList.Add(new FullAuditory
-                    {
-                        Odd = g.ToList()[0],
-                        Pair = g.Key.Pair,
-                        DayPeople = g.Key.DayPeople
-                    });
+                    fAud.Odd = list[0];
                 }
+
+                if (g.Count() == 2)
+                {
+                    if (list[1].Day >= 8)
+                    {
+                        fAud.Even = list[1];
+                    }
+                    else
+                    {
+                        fAud.Odd = list[1];
+                    }
+                }
+                groupList.Add(fAud);
             }
       
             foreach (var aud in groupList)
