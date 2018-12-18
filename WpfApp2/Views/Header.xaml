@@ -16,8 +16,6 @@
         </Style>
     </UserControl.Resources>
 
-  
-
     <Border BorderBrush="Black" BorderThickness="1">
         <Grid Background="White">
             <Grid.ColumnDefinitions>
@@ -32,6 +30,13 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="17"/>
             </Grid.ColumnDefinitions>
+
+            <!--<Image Width="28" Height="28" HorizontalAlignment="Center" Grid.Column="0">
+                <Image.Source >
+                    <FormatConvertedBitmap Source="C:\Users\Лидия\OneDrive\Документы\Расписание\WpfApp2 — копия (2)\WpfApp2\book (1).png"
+                 />
+                </Image.Source>
+            </Image>-->
 
             <Label Style="{StaticResource Header}" Grid.Column="1">8:15 - 9:45</Label>
             <Label Style="{StaticResource Header}" Grid.Column="2">9:55 - 11:25</Label>

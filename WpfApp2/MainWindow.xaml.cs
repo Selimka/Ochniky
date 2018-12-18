@@ -46,12 +46,12 @@ namespace WpfApp2
 
         void LoadAudInfo (string audTitle)
         {
-            string sqlExpression = string.Format("SELECT (day-1)%7+1 as day, everyweek, para," +
+            string sqlExpression = string.Format("SELECT day, everyweek, para," +
                 " rtrim(p.preps) as prep," +
                 "rtrim(vp.pred) as pred," +
                 "rtrim(nt.repvrnt) as nt," +
                 "rtrim(coalesce(pl.konts, kg.obozn, kk.obozn)) as kont," +
-                "rtrim(coalesce(pl.stud, kg.students, kk.stud)) as stud " +
+                "coalesce(pl.stud, kg.students, kk.stud) as stud " +
                 "FROM raspis r " +
                 "LEFT JOIN auditories a ON r.aud = a.id_60 " +
                 "LEFT JOIN raspnagr rn ON rn.id_51 = r.raspnagr " +
@@ -78,12 +78,12 @@ namespace WpfApp2
                         Group = x.Field<String>("kont"),
                         Pair = x.Field<Int16>("para"),
                         Discipline = x.Field<String>("pred"),
-                        DayPeople = x.Field<int>("day"),
-                       // Count = x.Field<int>("stud"),
-                        //DayPeople = x.Field<int>((x.Field<int>("day") - 1) % 7 + 1),
+                        Day = x.Field<Int16>("day"),
+                        Count = x.Field<int>("stud"),
+                        DayPeople = (x.Field<Int16>("day") - 1) % 7 + 1,
                         Type = x.Field<String>("nt"),
                         Teacher = x.Field<String>("prep"),
-                        // Is_everyweek =x.Field<bool>("everyweek")
+                        Is_everyweek =x.Field<Int16>("everyweek")==2
                     });
 
                 this.Auditories = new ObservableCollection<Auditory>(fetchedPersons);
@@ -129,15 +129,6 @@ namespace WpfApp2
                     property.SetValue(rowControl, aud);
                 }
             }
-
-            //foreach (var l in groupList)
-            //{
-            //    if (l.Is_everyweek == true)
-            //    {
-
-            //    }
-            //}
-
         }
 
         public ObservableCollection<String> ListAud
@@ -154,7 +145,7 @@ namespace WpfApp2
 
         void LoadListAud()
         {
-            string query = "SELECT obozn " +
+            string query = "SELECT rtrim(obozn) as obozn " +
                 "From auditories " +
                 "Order by obozn";
 
@@ -208,6 +199,14 @@ namespace WpfApp2
                 }
             }
             LoadAudInfo(cmb.SelectedItem as String);
+        }
+
+        void ComboboxTextChanged(object sender, RoutedEventArgs e)
+        {
+           CmBx.IsDropDownOpen = true;
+            CollectionView pick = (CollectionView)CollectionViewSource.GetDefaultView(CmBx.ItemsSource);
+            pick.Filter = s =>
+                ((string)s).IndexOf(CmBx.Text, StringComparison.CurrentCultureIgnoreCase) >= 0;
         }
     }
 }
