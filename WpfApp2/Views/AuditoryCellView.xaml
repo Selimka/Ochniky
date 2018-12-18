@@ -19,7 +19,7 @@
             <Grid.Resources>
                 <root:NullVisibilityConverter x:Key="NullToVisibilityConverter"/>
             </Grid.Resources>
-            <StackPanel Margin="4,4,4,4" Visibility="{Binding Auditories, Converter={StaticResource NullToVisibilityConverter}}">
+            <StackPanel Margin="4,4,4,4" Visibility="{Binding Auditories, Converter={StaticResource NullToVisibilityConverter}}" VerticalAlignment="Center">
 
                 <TextBlock Style="{StaticResource Cell}" Text="{Binding Auditories.Group, FallbackValue=Group}" FontWeight="Bold" HorizontalAlignment="Center"/>
                 <TextBlock Style="{StaticResource Cell}" Text="{Binding Auditories.Teacher, FallbackValue=Teacher}" />

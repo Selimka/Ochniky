@@ -23,11 +23,27 @@ namespace WpfApp2.Views
         public FullAuditory FullAud
         {
             get { return (FullAuditory)GetValue(FullAudProperty); }
-            set { SetValue(FullAudProperty, value); }
+            set {
+              
+                SetValue(FullAudProperty, value);
+            }
         }
 
         public static readonly DependencyProperty FullAudProperty =
-            DependencyProperty.Register("FullAud", typeof(FullAuditory), typeof(FullAudCellView), new PropertyMetadata(null));
+            DependencyProperty.Register("FullAud", typeof(FullAuditory), typeof(FullAudCellView), new PropertyMetadata(null, new PropertyChangedCallback((sender, args) =>
+            {
+                var cellView = sender as FullAudCellView;
+                if (cellView.FullAud.Is_everyweek)
+                {
+                    cellView.secondRow.Height = new GridLength(0);
+                    cellView.firstRow.Height = new GridLength(220);
+                }
+                else
+                {
+                    cellView.secondRow.Height = new GridLength(110);
+                    cellView.firstRow.Height = new GridLength(110);
+                }
+            })));
 
         public FullAudCellView()
         {
